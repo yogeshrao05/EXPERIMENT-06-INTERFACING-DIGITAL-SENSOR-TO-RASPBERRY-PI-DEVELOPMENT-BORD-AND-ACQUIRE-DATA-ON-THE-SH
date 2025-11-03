@@ -1,8 +1,8 @@
  # EXPERIMENT--06-INTERFACING-DIGITAL-SENSOR-ON-RASPBERRY-PI-DEVELOPMENT-BOARD-
-### NAME
-### ROLL NO:
-### DEPARTMENT 
-### DATE
+### NAME: YOGESH RAO S 
+### ROLL NO: 212222110055
+### DEPARTMENT : B.E. CSE-IOT
+### DATE: 01-11-2025
 
 ### AIM
 interface the DHT11 digital temperature and humidity sensor with a Raspberry Pi development board and display real-time data.
@@ -77,44 +77,32 @@ sudo apt-get install libgpiod2
 open thonny python and writhe the python script as shown below 
 
 
-### PYTHON SCRIPT 
- 
-`
+### PROGRAM: 
 
-
+```
+import Adafruit_DHT
 import time
-import board
-import adafruit_dht
-import psutil
-//// first check if a libgpiod process is running. 
-for proc in psutil.process_iter():
-    if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
-        proc.kill()
-sensor = adafruit_dht.DHT11(board.D23)
+
+
+SENSOR = Adafruit_DHT.DHT11
+GPIO_PIN = 4   
+print("Reading temperature and humidity data from DHT sensor...")
+
 while True:
-    try:
-        temp = sensor.temperature
-        humidity = sensor.humidity
-        print("Temperature: {}*C   Humidity: {}% ".format(temp, humidity))
-    except RuntimeError as error:
-        print(error.args[0])
-        time.sleep(2.0)
-        continue
-    except Exception as error:
-        sensor.exit()
-        raise error
-    time.sleep(2.0)`
-
-
-
-
-
-
-## SCREENSHOT OF THE OUPT AND CIRCUIT 
-
-
-
-
     
+    humidity, temperature = Adafruit_DHT.read_retry(SENSOR, GPIO_PIN)
+    
+    if humidity is not None and temperature is not None:
+        print(f"Temperature: {temperature:.1f}°C  |  Humidity: {humidity:.1f}%")
+    else:
+        print("Sensor failure. Check wiring or power.")
+    
+    time.sleep(2)
+```
+
+## SCREENSHOT OF THE OUTPUTPT :
+![WhatsApp Image 2025-11-01 at 16 16 59_5a846a4f](https://github.com/user-attachments/assets/d571fa22-e03c-45d1-80dd-6e6f83e9f69b)
+
+
 ## RESULT:
 The DHT11 temperature and humidity sensor was successfully interfaced with the Raspberry Pi, and real-time data was retrieved and displayed.
